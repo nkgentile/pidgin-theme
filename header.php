@@ -21,22 +21,26 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
+<div id="page" class="site container">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'pidgin-theme' ); ?></a>
 
 	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
+		<div class="site-branding row justify-content-center text-center">
+			<h1 class="site-title col-12">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php if( has_custom_logo() ):
+						$custom_logo_id = get_theme_mod( 'custom_logo' );
+						$custom_logo_dimensions = 75;
+						$custom_logo_src = wp_get_attachment_image_src( $custom_logo_id, [$custom_logo_dimensions, $custom_logo_dimensions], true )[0];
 				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<img src="<?php echo $custom_logo_src; ?>" width="<?php echo $custom_logo_dimensions; ?>" height="<?php echo $custom_logo_dimensions; ?>"/>
+				<?php else: ?>
+					<?php the_custom_logo(); ?>
+				<?php endif; ?>
+					<p class="site-description col-12"><?php echo get_bloginfo('name'); ?></p>
+				</a>
+			</h1>
 				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
 			$pidgin_theme_description = get_bloginfo( 'description', 'display' );
 			if ( $pidgin_theme_description || is_customize_preview() ) :
 				?>
@@ -45,11 +49,14 @@
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'pidgin-theme' ); ?></button>
 			<?php
 			wp_nav_menu( array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
+				'theme_location'  => 'menu-1',
+				'depth'	          => 2, // 1 = no dropdowns, 2 = with dropdowns.
+				'container'		  => false,
+				'menu_class'      => 'nav justify-content-center',
+				'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+				'walker'          => new WP_Bootstrap_Navwalker(),
 			) );
 			?>
 		</nav><!-- #site-navigation -->

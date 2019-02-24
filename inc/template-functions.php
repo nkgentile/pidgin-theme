@@ -40,3 +40,8 @@ add_action( 'wp_head', 'pidgin_theme_pingback_header' );
  * Adding custom post types.
  */
 require get_template_directory() . '/post-types/pidgin-issue.php';
+
+/**
+ * Adding custom Boostrap navigation menu walker
+ */
+require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
