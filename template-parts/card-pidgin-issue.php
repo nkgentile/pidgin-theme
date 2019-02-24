@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( array( 'col', 'text-center' ) ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( array( 'col', 'text-center', get_post_type().'-card' ) ); ?>>
 
 	<?php pidgin_theme_post_thumbnail(); ?>
 

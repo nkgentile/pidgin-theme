@@ -52,8 +52,8 @@
 			<?php
 			wp_nav_menu( array(
 				'theme_location'  => 'menu-1',
-				'depth'	          => 2, // 1 = no dropdowns, 2 = with dropdowns.
-				'container'		  => false,
+				'depth'	          => 1, // 1 = no dropdowns, 2 = with dropdowns.
+				'container' 	  => false,
 				'menu_class'      => 'nav justify-content-center',
 				'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
 				'walker'          => new WP_Bootstrap_Navwalker(),
