@@ -134,8 +134,9 @@ if ( ! function_exists( 'pidgin_theme_post_thumbnail' ) ) :
 
 		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 			<?php
-			the_post_thumbnail( 'post-thumbnail', array(
-				'alt' => the_title_attribute( array(
+			the_post_thumbnail( 'medium', array(
+				'class' => 'figure-img img-fluid',
+				'alt'   => the_title_attribute( array(
 					'echo' => false,
 				) ),
 			) );
