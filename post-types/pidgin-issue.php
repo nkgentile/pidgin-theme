@@ -56,6 +56,15 @@ function pidgin_issue_init() {
     }
   ) );
 
+  register_meta( 'pidgin-issue', 'pidgin_issue_alt_image', array(
+    'show_in_rest'  => true,
+    'single'        => true,
+    'type'          => 'string',
+    'auth_callback' => function() {
+      return current_user_can( 'edit_posts' );
+    }
+  ) );
+
 }
 add_action( 'init', 'pidgin_issue_init' );
 
@@ -109,87 +118,15 @@ function pidgin_issue_add_to_query( $query ) {
 add_action( 'pre_get_posts', 'pidgin_issue_add_to_query' );
 
 /**
- * Register custom block categories
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- */
-function pidgin_issue_block_categories( $categories, $post ) {
-  /*
-  if ( $post->post_type !== 'pidgin-issue' ) {
-    return $categories;
-  }
-  */
-
-  return array_merge(
-    $categories,
-    array(
-      array(
-        'slug'  => 'pidgin-issue',
-        'title' => __( 'Issue', 'pidgin-theme' ),
-        'icon'  => 'dashicons-book'
-      ),
-    )
-  );
-}
-add_filter( 'block_categories', 'pidgin_issue_block_categories' );
-
-/**
  * Register custom blocks
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function pidgin_theme_blocks_init() {
-  wp_enqueue_script(
-    'pidgin-issue-block-date',
-    get_template_directory_uri() . '/js/blocks/pidgin-issue-date.js',
-    array( 'wp-blocks', 'wp-element', 'wp-components' )
-  );
-}
-add_action( 'enqueue_block_editor_assets', 'pidgin_theme_blocks_init' );
+require_once get_template_directory() . '/inc/class-pidgin-meta-date.php';
+add_action( 'add_meta_boxes', array( 'PidginMetaDate', 'add' ) );
+add_action( 'save_post', array( 'PidginMetaDate', 'save' ) );
 
-function pidgin_theme_add_custom_meta() {
-  function pidgin_issue_date_box_html( $post ) {
-    $key = 'pidgin_issue_date';
-    $value = get_post_meta( $post->ID, $key, true );
-    $description = __( 'Publication Date', 'pidgin-theme' );
-    ?>
-      <input type="hidden" name="pidgin_issue_date_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-      <label for="<?= $key ?>"><?= $description ?></label>
-      <br/>
-      <input type="text" name="<?= $key ?>" id="<?= $key ?>" class="regular-text" value="<?= $value ?>">
-    <?php
+require_once get_template_directory() . '/inc/class-pidgin-meta-alt-image.php';
+add_action( 'add_meta_boxes', array( 'PidginMetaAltImage', 'add' ) );
+add_action( 'save_post', array( 'PidginMetaAltImage', 'save' ) );
 
-  }
-  add_meta_box(
-    'pidgin_issue_date',
-    __( 'Publication Date', 'pidgin-theme' ),
-    'pidgin_issue_date_box_html',
-    'pidgin-issue'
-  );
-}
-add_action( 'add_meta_boxes', 'pidgin_theme_add_custom_meta' );
-
-function pidgin_issue_date_save( $post_id ) {
-  if ( !wp_verify_nonce( $_POST['pidgin_issue_date_nonce'], basename(__FILE__) ) ) {
-    return $post_id; 
-  }
-
-  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-    return $post_id;
-  }
-
-  if ( !current_user_can( 'edit_post', $post_id ) ) {
-    return $post_id;
-  }  
-
-  $key = 'pidgin_issue_date';
-  $old = get_post_meta( $post_id, $key, true );
-  $new = $_POST[$key];
-
-  if ( $new && $new !== $old ) {
-    update_post_meta( $post_id, $key, $new );
-  } elseif ( '' === $new && $old ) {
-    delete_post_meta( $post_id, $key, $old );
-  }
-}
-add_action( 'save_post', 'pidgin_issue_date_save' );
