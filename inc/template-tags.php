@@ -126,9 +126,9 @@ if ( ! function_exists( 'pidgin_theme_post_thumbnail' ) ) :
 		if ( is_singular() ) :
 			?>
 
-			<div class="post-thumbnail">
-				<?php the_post_thumbnail(); ?>
-			</div><!-- .post-thumbnail -->
+			<figure class="post-thumbnail figure">
+				<?php the_post_thumbnail( 'post-thumbnail', array( 'class' => 'figure-img img-fluid' ) ); ?>
+			</figure><!-- .post-thumbnail -->
 
 		<?php else : ?>
 
