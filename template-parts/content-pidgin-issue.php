@@ -18,8 +18,9 @@
     <section class="col-md-12 col-lg-6">
         <header class="entry-header">
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            <?php var_dump( get_post_custom(get_the_ID()) ); ?>
             <dl>
-                <?php $date = get_post_meta( get_the_ID(), 'date', true ); ?>
+                <?php $date = get_post_meta( get_the_ID(), 'pidgin_issue_date', true ); ?>
                 <dt>
                   <?= $date ?>
                 </dt>
