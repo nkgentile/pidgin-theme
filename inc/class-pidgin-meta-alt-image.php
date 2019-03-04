@@ -12,6 +12,7 @@ abstract class PidginMetaAltImage extends PidginMetaBox {
     $key = self::$key;
     $description = self::$description;
     $value = get_post_meta( $post->ID, $key, true );
+    $thumbnail_src = wp_get_attachment_image_src( $value, 'medium' );
     ?>
       <div class="image-preview">
           <img src="<?= $value ?>" style="max-width: 250px;">
@@ -49,7 +50,7 @@ abstract class PidginMetaAltImage extends PidginMetaBox {
                 // Grabs the attachment selection and creates a JSON representation of the model.
                 var media_attachment = meta_image_frame.state().get('selection').first().toJSON();
                 // Sends the attachment URL to our custom image input field.
-                meta_image.val(media_attachment.url);
+                meta_image.val(media_attachment.id);
                 meta_image_preview.children('img').attr('src', media_attachment.url);
               });
               // Opens the media library frame.

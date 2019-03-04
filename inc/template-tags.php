@@ -132,16 +132,22 @@ if ( ! function_exists( 'pidgin_theme_post_thumbnail' ) ) :
 
 		<?php else : ?>
 
-		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
-			<?php
+		<figure class="post-thumbnail" aria-hidden="true" tabindex="-1">
+      <?php
 			the_post_thumbnail( 'medium', array(
 				'class' => 'figure-img img-fluid',
 				'alt'   => the_title_attribute( array(
 					'echo' => false,
 				) ),
 			) );
+
+      $pidgin_thumbnail_alt_id  = get_post_meta( get_the_ID(), 'pidgin_issue_alt_image', true );
+      echo wp_get_attachment_image( $pidgin_thumbnail_alt_id, 'medium', false, array(
+        'class' => 'flipped',
+      ) );
+
 			?>
-		</a>
+		</figure>
 
 		<?php
 		endif; // End is_singular().
