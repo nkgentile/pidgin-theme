@@ -16,28 +16,28 @@ abstract class PidginMetaBox {
 	}
 
 	public static function save( $post_id ) {
+
+    $is_autosave = wp_is_post_autosave( $post_id );
+    $is_revision = wp_is_post_revision( $post_id );
+
 		$key = static::$key;
+    $empty_meta = !isset( $_POST[$key] );
+    $nonce = $_POST[$key.'_nonce'];
+    $is_invalid_nonce = !isset( $nonce ) || !wp_verify_nonce( $nonce, basename( $key ) );
+    $cant_edit = !current_user_can( 'edit_post', $post_id );
 
-		if ( !wp_verify_nonce( $_POST[$key.'_nonce'], $key ) ) {
-			return $post_id; 
-		}
+    if(
+      $empty_meta
+      || $cant_edit
+      || $is_invalid_nonce
+      || $is_autosave
+      || $is_revision 
+    ) {
+      return $post_id;
+    } else {
+      update_post_meta( $post_id, $key, sanitize_text_field( $_POST[$key] ) );
+    }
 
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return $post_id;
-		}
-
-		if ( !current_user_can( 'edit_post', $post_id ) ) {
-			return $post_id;
-		}  
-
-		$old = get_post_meta( $post_id, $key, true );
-		$new = $_POST[$key];
-
-		if ( $new && $new !== $old ) {
-			update_post_meta( $post_id, $key, $new );
-		} elseif ( '' === $new && $old ) {
-			delete_post_meta( $post_id, $key, $old );
-		}
 	}
 
 	abstract public static function html( $post );
