@@ -18,35 +18,11 @@
     <section class="col-md-12 col-lg-6">
         <header class="entry-header">
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-            <?php var_dump( get_post_custom(get_the_ID()) ); ?>
             <dl>
-                <?php $date = get_post_meta( get_the_ID(), 'pidgin_issue_date', true ); ?>
+                <?php $publication_date = get_post_meta( get_the_ID(), 'pidgin_issue_date', true ); ?>
                 <dt>
-                  <?= $date ?>
+                  <?= $publication_date ?>
                 </dt>
-                <?php $editors = get_post_meta( get_the_ID(), 'editor' ); ?>
-                <?php if ( $editors ): ?>
-                <dt>Editor<?= ( count( $editors ) > 1 ? 's' : '' ) ?></dt>
-                <dd>
-                    <ul class="list-unstyled">
-                        <?php foreach ( $editors as $editor ): ?>
-                        <li><?= $editor ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </dd>
-                <?php endif; ?>
-
-                <?php $pieces = get_post_meta( get_the_ID(), 'piece' ); ?>
-                <?php if ( $pieces ): ?>
-                <dt>Table of Contents</dt>
-                <dd>
-                    <ul class="list-unstyled">
-                        <?php foreach ( $pieces as $piece ): ?>
-                        <li><?= $piece ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </dd>
-                <?php endif; ?>
             </dl>
         </header><!-- .entry-header -->
 

@@ -17,17 +17,6 @@
 		<?php the_title( '<h6 class="entry-title">', '</h6>' ); ?>
 	</header><!-- .entry-header -->
 
-	<div class="entry-content">
-		<?php
-		the_content();
-
-		wp_link_pages( array(
-			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'pidgin-theme' ),
-			'after'  => '</div>',
-		) );
-		?>
-	</div><!-- .entry-content -->
-
 	<?php if ( get_edit_post_link() ) : ?>
 		<footer class="entry-footer">
 			<?php

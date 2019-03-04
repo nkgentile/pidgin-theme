@@ -14,7 +14,7 @@ abstract class PidginMetaAltImage extends PidginMetaBox {
     $value = get_post_meta( $post->ID, $key, true );
     ?>
       <div class="image-preview">
-          <img src="<= $value ?>" style="max-width: 250px;">
+          <img src="<?= $value ?>" style="max-width: 250px;">
       </div>
       <p>
         <input type="hidden" name="<?= $key.'_nonce' ?>" value="<?php echo wp_create_nonce( $key ); ?>">

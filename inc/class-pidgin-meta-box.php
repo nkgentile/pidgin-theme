@@ -17,14 +17,15 @@ abstract class PidginMetaBox {
 
 	public static function save( $post_id ) {
 
+    $cant_edit = !current_user_can( 'edit_post', $post_id );
     $is_autosave = wp_is_post_autosave( $post_id );
     $is_revision = wp_is_post_revision( $post_id );
 
 		$key = static::$key;
     $empty_meta = !isset( $_POST[$key] );
+    
     $nonce = $_POST[$key.'_nonce'];
     $is_invalid_nonce = !isset( $nonce ) || !wp_verify_nonce( $nonce, basename( $key ) );
-    $cant_edit = !current_user_can( 'edit_post', $post_id );
 
     if(
       $empty_meta
