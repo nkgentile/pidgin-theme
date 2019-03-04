@@ -65,6 +65,15 @@ function pidgin_issue_init() {
     }
   ) );
 
+  register_meta( 'pidgin-issue', 'pidgin_issue_editors', array(
+    'show_in_rest'  => true,
+    'single'        => true,
+    'type'          => 'string',
+    'auth_callback' => function() {
+      return current_user_can( 'edit_posts' );
+    }
+  ) );
+
 }
 add_action( 'init', 'pidgin_issue_init' );
 
@@ -129,4 +138,8 @@ add_action( 'save_post', array( 'PidginMetaDate', 'save' ) );
 require_once get_template_directory() . '/inc/class-pidgin-meta-alt-image.php';
 add_action( 'add_meta_boxes', array( 'PidginMetaAltImage', 'add' ) );
 add_action( 'save_post', array( 'PidginMetaAltImage', 'save' ) );
+
+require_once get_template_directory() . '/inc/class-pidgin-meta-editors.php';
+add_action( 'add_meta_boxes', array( 'PidginMetaEditors', 'add' ) );
+add_action( 'save_post', array( 'PidginMetaEditors', 'save' ) );
 
