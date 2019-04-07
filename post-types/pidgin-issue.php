@@ -122,6 +122,7 @@ add_filter( 'post_updated_messages', 'pidgin_issue_updated_messages' );
 function pidgin_issue_add_to_query( $query ) {
 	if( is_home() && $query->is_main_query() )
 		$query->set( 'post_type', array( 'pidgin-issue' ) );
+		$query->set( 'nopaging', true );
 	return $query;
 }
 add_action( 'pre_get_posts', 'pidgin_issue_add_to_query' );
