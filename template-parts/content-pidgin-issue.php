@@ -11,19 +11,23 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( array( 'row' ) ); ?>>
 
-    <section class="col-md-12 col-lg-6">
+    <section class="col-sm-12">
         <?php pidgin_theme_post_thumbnail(); ?>
     </section>
 
-    <section class="col-md-12 col-lg-6">
+    <section class="col-sm-12">
         <header class="entry-header">
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            <?php $publication_date = get_post_meta( get_the_ID(), 'pidgin_issue_date', true ); ?>
+            <?php if($publication_date): ?>
             <dl>
-                <?php $publication_date = get_post_meta( get_the_ID(), 'pidgin_issue_date', true ); ?>
+                <?php if($publication_date): ?>
                 <dt>
                   <?= $publication_date ?>
                 </dt>
+                <?php endif; ?>
             </dl>
+            <?php endif; ?>
         </header><!-- .entry-header -->
 
         <main class="entry-content">
@@ -36,9 +40,8 @@
             ) );
             ?>
         </main><!-- .entry-content -->
-    </section>
 
-    <?php if ( get_edit_post_link() ) : ?>
+        <?php if ( get_edit_post_link() ) : ?>
         <footer class="entry-footer">
             <?php
             edit_post_link(
@@ -59,5 +62,7 @@
             );
             ?>
         </footer><!-- .entry-footer -->
-    <?php endif; ?>
+        <?php endif; ?>
+    </section>
+
 </article><!-- #post-<?php the_ID(); ?> -->
