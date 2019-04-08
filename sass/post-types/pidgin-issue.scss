@@ -1,5 +1,19 @@
 .pidgin-issue-card {
+
+  @include media-breakpoint-down(sm) {
+
+    .post-thumbnail {
+      img:not(.flipped) {
+        display: none;
+      }
+    }
+
+  }
+
 	@include media-breakpoint-up(md) {
+    
+    opacity: 0.5;
+
 		.post-thumbnail {
 
       display: block;
@@ -8,15 +22,21 @@
       img.flipped {
         position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
 
         opacity: 0;
       }
 		}
 
 		&:hover {
+
+      opacity: 1;
+
+      .entry-title {
+        color: $black;
+      }
+
 			.post-thumbnail {
         img.flipped {
           opacity: 1;

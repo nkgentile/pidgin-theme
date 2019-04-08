@@ -14,7 +14,7 @@
 	<?php pidgin_theme_post_thumbnail(); ?>
 
 	<header class="entry-header">
-		<?php the_title( '<h6 class="entry-title">', '</h6>' ); ?>
+		<?php the_title( '<p class="entry-title">', '</p>' ); ?>
 	</header><!-- .entry-header -->
 
 </a><!-- #post-<?php the_ID(); ?> -->

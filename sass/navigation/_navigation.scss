@@ -8,9 +8,21 @@
 --------------------------------------------------------------*/
 //@import "menus";
 
+.site-logo {
+  .underline {
+    opacity: 0;
+  }
+
+  &:hover {
+    .underline {
+      opacity: 1;
+    }
+  }
+}
+
 .nav-item {
 	& > .nav-link {
-		@extend .text-secondary;
+		@extend .text-secondary, .lead, .font-weight-normal;
 	}
 
 	&.active  > .nav-link {

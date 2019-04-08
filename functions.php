@@ -129,10 +129,6 @@ function pidgin_theme_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
-
-  if( is_home() && is_front_page() ) {
-    wp_enqueue_script( 'pidgin-theme-card', get_template_directory_uri().'/js/pidgin-card-flip.js', array( 'jquery' ), null, true );
-  }
 }
 add_action( 'wp_enqueue_scripts', 'pidgin_theme_scripts' );
 

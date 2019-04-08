@@ -134,6 +134,24 @@ if ( ! function_exists( 'pidgin_theme_post_thumbnail' ) ) :
 
 		<figure class="post-thumbnail" aria-hidden="true" tabindex="-1">
       <?php
+
+      $pidgin_thumbnail_alt_id  = get_post_meta( get_the_ID(), 'pidgin_issue_alt_image', true );
+
+      if($pidgin_thumbnail_alt_id):
+
+      echo wp_get_attachment_image( $pidgin_thumbnail_alt_id, 'medium', false, array(
+        'class' => 'figure-img img-fluid',
+      ) );
+
+			the_post_thumbnail( 'medium', array(
+				'class' => 'flipped',
+				'alt'   => the_title_attribute( array(
+					'echo' => false,
+				) ),
+			) );
+
+      else: 
+
 			the_post_thumbnail( 'medium', array(
 				'class' => 'figure-img img-fluid',
 				'alt'   => the_title_attribute( array(
@@ -141,10 +159,8 @@ if ( ! function_exists( 'pidgin_theme_post_thumbnail' ) ) :
 				) ),
 			) );
 
-      $pidgin_thumbnail_alt_id  = get_post_meta( get_the_ID(), 'pidgin_issue_alt_image', true );
-      echo wp_get_attachment_image( $pidgin_thumbnail_alt_id, 'medium', false, array(
-        'class' => 'flipped',
-      ) );
+      endif;
+
 
 			?>
 		</figure>

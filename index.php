@@ -16,7 +16,7 @@ get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main row justify-content-start my-5">
+		<main id="main" class="site-main row justify-content-start">
 
 		<?php
 		if ( have_posts() ) :
